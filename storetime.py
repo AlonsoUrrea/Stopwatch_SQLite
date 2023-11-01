@@ -90,12 +90,16 @@ class Time:
 
     def fromStr(self, string: str):
         re_comp = re.compile(Time.REGEX)
-        match_ = re_comp.findall(string)[0]
-        self.__hours = int(match_[re_comp.groupindex['H']-1])
-        self.__minutes = int(match_[re_comp.groupindex['M']-1])
-        self.__seconds = int(match_[re_comp.groupindex['s']-1])
+        try:
+            match_ = re_comp.findall(string)[0]
+            self.__hours = int(match_[re_comp.groupindex['H']-1])
+            self.__minutes = int(match_[re_comp.groupindex['M']-1])
+            self.__seconds = int(match_[re_comp.groupindex['s']-1])
 
-        return self
+            return self
+        except IndexError:
+            raise Time.WrongFormatError
+        #end try
     #end def
 
     def __str__(self) -> str:
