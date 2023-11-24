@@ -76,6 +76,13 @@ class Time:
         return self.__hours
     #end def
 
+    def totalSeconds(self) -> int:
+        return self.seconds() + (
+            self.minutes() + 
+            (self.hours() * self.MINUTES_PER_HOUR)
+        ) * self.SECONDS_PER_MINUTE
+    #end def
+
     def reset(self):
         self.__seconds = 0
         self.__minutes = 0
@@ -101,6 +108,16 @@ class Time:
             raise Time.WrongFormatError
         #end try
     #end def
+
+    # STATIC
+    def from_str(string: str):
+        return Time().fromStr(string)
+    def from_seconds(seconds: int):
+        t = Time()
+        t.addSeconds(seconds)
+
+        return t
+    #end def 
 
     def __str__(self) -> str:
         return "%s:%s:%s" %(
