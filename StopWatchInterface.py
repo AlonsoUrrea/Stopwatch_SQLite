@@ -1,6 +1,8 @@
 #libaries
 from PyQt5 import QtCore, QtGui, QtWidgets
 import datetime
+import pathlib
+import os
 
 #local
 from QtUi import Ui_MainWindow
@@ -8,7 +10,7 @@ import storetime
 
 class InflatedStopwatchInterface(Ui_MainWindow):
     INTERVAL = 1000
-    LOG_PATH = "C:\\Users\\Alonso\\Documents\\Code\\Python\\working_hours.log"
+    LOG_PATH = os.path.join(pathlib.Path().resolve(), "working_hours.log")
     DATE_FORMAT = "%Y-%m-%d"
     def setupUi(self, MainWindow):
         super().setupUi(MainWindow)
