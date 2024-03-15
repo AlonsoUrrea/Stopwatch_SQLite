@@ -9,6 +9,7 @@ app = QtWidgets.QApplication(sys.argv)
 main_window = QtWidgets.QMainWindow() # ventana principal
 ui = InflatedStopwatchInterface()
 ui.setupUi(main_window)
+ui.setupDb()
 
 ui.seconder.timeout.connect(ui.addSecond)
 ui.btnStart.clicked.connect(ui.clickStart)
