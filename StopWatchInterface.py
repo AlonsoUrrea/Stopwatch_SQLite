@@ -7,6 +7,7 @@ import os
 #local
 from QtUi import Ui_MainWindow
 import storetime
+from models import *
 
 class InflatedStopwatchInterface(Ui_MainWindow):
     INTERVAL = 1000
@@ -14,11 +15,21 @@ class InflatedStopwatchInterface(Ui_MainWindow):
     DATE_FORMAT = "%Y-%m-%d"
     def setupUi(self, MainWindow):
         super().setupUi(MainWindow)
-        self.today = datetime.datetime.today()
+        today = datetime.datetime.today()
+        self.today = datetime.datetime(
+            year=today.year,
+            month=today.month,
+            day=today.day,
+            hour=0, minute=0, second=0
+        )
         self.seconder = QtCore.QTimer()
         self.counter = storetime.Time()
 
         self.display()
+    #end def
+        
+    def setupDb(self):
+        Record().createTable()
     #end def
 
     # -- Behaviors
@@ -27,12 +38,10 @@ class InflatedStopwatchInterface(Ui_MainWindow):
     #end def
 
     def log(self):
-        with open(self.LOG_PATH, "a") as log_file:
-            log_file.write("%s, %s\n" 
-                %(self.today.strftime(self.DATE_FORMAT),
-                str(self.counter)
-            ))
-        #end with
+        log = Record() 
+        log.unix_date  = SqLiteConvertions.dateToUnix(self.today)
+        log.seconds_worked = self.counter.totalSeconds()
+        log.save()
     #end def
 
     # -- Events
