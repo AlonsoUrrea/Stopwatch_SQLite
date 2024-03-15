@@ -72,4 +72,8 @@ class Record(Model):
             },
         ]
     #end def
+
+    def date(self) -> datetime.datetime:
+        return SqLiteConvertions.unixToDate(self.unix_date)
+    #end def
 #end class

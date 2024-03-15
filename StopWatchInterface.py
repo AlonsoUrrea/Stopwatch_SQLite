@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import datetime
 import pathlib
 import os
+from sqlitemodel import SQL
 
 #local
 from QtUi import Ui_MainWindow
@@ -24,6 +25,7 @@ class InflatedStopwatchInterface(Ui_MainWindow):
         )
         self.seconder = QtCore.QTimer()
         self.counter = storetime.Time()
+        self.record = Record()
 
         self.display()
     #end def
@@ -38,11 +40,24 @@ class InflatedStopwatchInterface(Ui_MainWindow):
     #end def
 
     def log(self):
-        log = Record() 
-        log.unix_date  = SqLiteConvertions.dateToUnix(self.today)
-        log.seconds_worked = self.counter.totalSeconds()
-        log.save()
+        self.record.unix_date = SqLiteConvertions.dateToUnix(self.today)
+        self.record.seconds_worked = self.counter.totalSeconds()
+        self.record.save()
     #end def
+        
+    def loadCounterFromLog(self, date: datetime.date=None):
+        if date is None:
+            date = self.today
+        #end if
+        record = Record().selectOne(SQL().WHERE('unix_date', '=', SqLiteConvertions.dateToUnix(date)))
+
+        if record.is_none():
+            return 
+        #end if
+        self.record = record
+        self.counter = Time.from_seconds(record.seconds_worked)
+    #end def
+
 
     # -- Events
     def addSecond(self):
