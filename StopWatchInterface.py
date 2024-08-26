@@ -51,7 +51,7 @@ class InflatedStopwatchInterface(Ui_MainWindow):
         #end if
         record = Record().selectOne(SQL().WHERE('unix_date', '=', SqLiteConvertions.dateToUnix(date)))
 
-        if record.is_none():
+        if record is None:
             return 
         #end if
         self.record = record
