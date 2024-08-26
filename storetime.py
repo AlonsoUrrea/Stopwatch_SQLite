@@ -79,8 +79,26 @@ class Time:
     def totalSeconds(self) -> int:
         return self.seconds() + (
             self.minutes() + 
-            (self.hours() * self.MINUTES_PER_HOUR)
+            (self.hours() * Time.MINUTES_PER_HOUR)
         ) * self.SECONDS_PER_MINUTE
+    #end def
+
+    def toSeconds(self) -> int:
+        return self.totalSeconds()
+    def toMinutes(self) -> float:
+        return (
+            self.hours() * Time.MINUTES_PER_HOUR +
+            self.minutes() +
+            self.seconds() / Time.SECONDS_PER_MINUTE
+        )
+    def toHours(self) -> float:
+        return (
+            self.hours() +
+            (
+                self.minutes() +
+                self.seconds() / Time.SECONDS_PER_MINUTE
+            ) / Time.MINUTES_PER_HOUR
+        )
     #end def
 
     def reset(self):
