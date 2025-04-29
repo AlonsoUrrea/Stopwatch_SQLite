@@ -2,3 +2,5 @@
 */*.pyc
 *.db
 *.x.py
+enviroment*
+*.ps1
