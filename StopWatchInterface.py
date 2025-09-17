@@ -83,6 +83,14 @@ class InflatedStopwatchInterface(Ui_MainWindow):
         self.display()
     #end def
 
+    def clickPlusOne(self):
+        self.counter.addMinute()
+        self.display()
+    def clickPlusTen(self):
+        self.counter.addMinutes(10)
+        self.display()
+    #end def
+    
     def clickClose(self):
         self.clickStop()
     #end def

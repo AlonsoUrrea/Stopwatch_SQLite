@@ -18,6 +18,8 @@ ui.seconder.timeout.connect(ui.addSecond)
 ui.btnStart.clicked.connect(ui.clickStart)
 ui.btnPause.clicked.connect(ui.clickPause)
 ui.btnStop.clicked.connect(ui.clickStop)
+ui.btnPlus1.clicked.connect(ui.clickPlusOne)
+ui.btnPlus10.clicked.connect(ui.clickPlusTen)
 app.aboutToQuit.connect(ui.clickClose)
 
 main_window.show()
